@@ -1,0 +1,35 @@
+
+.button {
+   background-color: #61dafb;
+   width: 100px;
+   height: 40px;
+   border-radius: 20px;
+   border: none;
+   font-size: 18px;
+   color: white;
+   cursor: pointer;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+   transition: background-color 0.3s ease;
+
+
+
+}
+
+.button:hover {
+   background-color: #00a3cc;
+}
+
+.button:focus {
+   outline: none;
+}
+
+.button:active {
+   transform: translateY(2px);
+}
+
+.button:disabled {
+   background-color: #ccc; /* Изменяем цвет фона для состояния "disabled" */
+   cursor: not-allowed; /* Изменяем курсор для состояния "disabled" */
+   pointer-events: none; /* Отключаем возможность взаимодействия с кнопкой */
+   opacity: 0.5; /* Уменьшаем прозрачность для состояния "disabled" */
+}
