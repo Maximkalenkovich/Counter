@@ -3,18 +3,21 @@ import s from './SettingTable.module.css'
 import {ChangeEvent, useState} from "react";
 import {SettingTableType} from "../../../App";
 
+export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxValueProps, onSettingsChange }) => {
+    const [min, setMin] = useState(minValueProps);
+    const [max, setMax] = useState(maxValueProps);
+    const [isError, setIsError] = useState(false);
 
-export const SettingTable: React.FC<SettingTableType> = ({minValueProps, maxValueProps, onSettingsChange}) => {
-    const [min, setMin] = useState(minValueProps)
-    const [max, setMax] = useState(maxValueProps)
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.currentTarget;
 
-    const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMin(parseInt(event.target.value));
+        let parsedValue = parseInt(value);
+
+        setMin((prevMin) => (name === 'min' ? parsedValue : prevMin));
+        setMax((prevMax) => (name === 'max' ? parsedValue : prevMax));
+        setIsError(parsedValue < 0);
     };
 
-    const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMax(Number(event.target.value));
-    };
 
     const handleApplySettings = () => {
         onSettingsChange(min, max);
@@ -25,19 +28,22 @@ export const SettingTable: React.FC<SettingTableType> = ({minValueProps, maxValu
             <div className={s.table}>
                 <label>
                     Max Value:
-                    <input type="number" value={max} onChange={handleMaxChange}/>
-
+                    <input type="number" className={isError ? s.inputError : ''} name="max" value={max} onChange={handleInputChange} />
                 </label>
-                <br/>
+                <br />
                 <label>
                     Start Value:
-                    <input  type="number" value={min} onChange={handleMinChange}/>
+                    <input
+                        type="number"
+                        name="min"
+                        className={isError ? s.inputError : ''}
+                        value={min}
+                        onChange={handleInputChange}
+                    />
                 </label>
-                <br/>
+                <br />
             </div>
-            <Button name={'set'} onClick={handleApplySettings} disabled={min<1 && max<1}/>
-
+            <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min} />
         </div>
-    )
-
-}
+    );
+};
