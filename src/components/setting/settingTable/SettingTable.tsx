@@ -5,18 +5,18 @@ import {SettingTableType} from "../../../App";
 import {NavLink} from "react-router-dom";
 
 export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxValueProps, onSettingsChange }) => {
-    const [min, setMin] = useState(minValueProps);
-    const [max, setMax] = useState(maxValueProps);
-    const [isError, setIsError] = useState(false);
+    const [min, setMin] = useState<number>(minValueProps);
+    const [max, setMax] = useState<number>(maxValueProps);
+    const [isError, setIsError] = useState<boolean>(false);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.currentTarget;
 
         let parsedValue = parseInt(value);
-
         setMin((prevMin) => (name === 'min' ? parsedValue : prevMin));
         setMax((prevMax) => (name === 'max' ? parsedValue : prevMax));
-        setIsError(parsedValue < 0 || (name === 'min' && parsedValue === max) || (name === 'max' && parsedValue === min) );
+        setIsError(parsedValue < 0 || (name === 'min' && parsedValue === max) || 
+            (name === 'max' && parsedValue === min) || (parsedValue === undefined) );
     };
 
 
@@ -25,15 +25,18 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
     };
 
     return (
-        <div className={'setting'}>
+        <div className={s.setting}>
             <div className={s.table}>
                 <label>
-                    Max Value:
-                    <input type="number" className={isError ? s.inputError : ''} name="max" value={max} onChange={handleInputChange} />
+                    <span className={s.title}>Max Value:</span>
+                    <input type="number"
+                           className={isError ? s.inputError : ''} name="max"
+                           value={max}
+                           onChange={handleInputChange} />
                 </label>
                 <br />
                 <label>
-                    Start Value:
+                    <span className={s.title}>Start Value:</span>
                     <input
                         type="number"
                         name="min"
@@ -44,7 +47,7 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
                 </label>
                 <br />
             </div>
-            <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min} />
+            <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min || undefined} />
             <NavLink to='/counter'><Button name={'counter'} onClick={()=>{}}/></NavLink>
         </div>
     );

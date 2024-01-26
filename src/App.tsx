@@ -14,8 +14,8 @@ export type SettingTableType = {
 
 function App() {
 
-    const [minValue, setMinValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(0);
+    const [minValue, setMinValue] = useState<number>(0);
+    const [maxValue, setMaxValue] = useState<number>(0);
 
     const handleSettingsChange = (newMin: number, newMax: number) => {
         setMinValue(newMin);

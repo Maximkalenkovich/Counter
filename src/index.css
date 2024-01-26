@@ -6,6 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*background-color: #333333;*/
+  background-image: url('/src/components/images/backgriund.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 code {
