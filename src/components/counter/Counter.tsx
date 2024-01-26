@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button} from "../button/Button";
 import st from './Counter.module.css'
+import {NavLink} from "react-router-dom";
 
 
 
@@ -36,6 +37,10 @@ export const Counter: React.FC<{ minValueProps: number; maxValueProps: number }>
                 onClick={reset}
                 disabled={count === minValueProps}
             />
+
+          <NavLink to='/set'><Button name='SET'
+                           onClick={()=>{}}/></NavLink>
         </div>
+
     );
 };

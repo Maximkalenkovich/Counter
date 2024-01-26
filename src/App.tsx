@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import { Counter } from "./components/counter/Counter";
-import { SettingTable } from "./components/setting/settingTable/SettingTable";
+import {Counter} from "./components/counter/Counter";
+import {SettingTable} from "./components/setting/settingTable/SettingTable";
+import {Navigate, Route, Routes} from "react-router-dom";
+import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 
 
 export type SettingTableType = {
@@ -22,8 +24,17 @@ function App() {
 
     return (
         <div className="App">
-            <SettingTable minValueProps={minValue} maxValueProps={maxValue} onSettingsChange={handleSettingsChange} />
-            <Counter minValueProps={minValue} maxValueProps={maxValue}  />
+            <Routes>
+                     <Route path={'/'} element={<Navigate to={'/counter'} />}></Route>
+                <Route path="/set" element={<SettingTable minValueProps={minValue} maxValueProps={maxValue}
+                                                         onSettingsChange={handleSettingsChange}/>}/>
+
+                <Route path="/counter" element={<Counter minValueProps={minValue} maxValueProps={maxValue}/>}/>
+                <Route path="/*" element={<NotFoundPage/>}/>
+
+
+            </Routes>
+
         </div>
     );
 }

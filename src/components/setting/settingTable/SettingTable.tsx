@@ -2,6 +2,7 @@ import {Button} from "../../button/Button";
 import s from './SettingTable.module.css'
 import {ChangeEvent, useState} from "react";
 import {SettingTableType} from "../../../App";
+import {NavLink} from "react-router-dom";
 
 export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxValueProps, onSettingsChange }) => {
     const [min, setMin] = useState(minValueProps);
@@ -15,7 +16,7 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
 
         setMin((prevMin) => (name === 'min' ? parsedValue : prevMin));
         setMax((prevMax) => (name === 'max' ? parsedValue : prevMax));
-        setIsError(parsedValue < 0);
+        setIsError(parsedValue < 0 || (name === 'min' && parsedValue === max) || (name === 'max' && parsedValue === min) );
     };
 
 
@@ -24,7 +25,7 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
     };
 
     return (
-        <div>
+        <div className={'setting'}>
             <div className={s.table}>
                 <label>
                     Max Value:
@@ -44,6 +45,7 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
                 <br />
             </div>
             <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min} />
+            <NavLink to='/counter'><Button name={'counter'} onClick={()=>{}}/></NavLink>
         </div>
     );
 };
