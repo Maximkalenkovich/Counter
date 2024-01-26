@@ -1,23 +1,20 @@
-import React, {useState} from "react";
-import {Button} from "../button/Button";
-import st from './Counter.module.css'
-import {NavLink} from "react-router-dom";
-
-
+import React, { useEffect, useState } from "react";
+import { Button } from "../button/Button";
+import st from './Counter.module.css';
+import { NavLink } from "react-router-dom";
 
 export const Counter: React.FC<{ minValueProps: number; maxValueProps: number }> = ({
                                                                                         minValueProps,
                                                                                         maxValueProps,
                                                                                     }) => {
     const defaultValue = 1;
-    const [count, setCount] = useState(minValueProps);
+    const [count, setCount] = useState<number>(minValueProps );
 
     const increment = () => {
         if (count < maxValueProps) {
             setCount(count + defaultValue);
         }
     };
-
     const reset = () => {
         setCount(minValueProps);
     };
@@ -37,10 +34,7 @@ export const Counter: React.FC<{ minValueProps: number; maxValueProps: number }>
                 onClick={reset}
                 disabled={count === minValueProps}
             />
-
-          <NavLink to='/set'><Button name='SET'
-                           onClick={()=>{}}/></NavLink>
+            <NavLink to='/set'><Button name='SET' onClick={() => { }} /></NavLink>
         </div>
-
     );
 };

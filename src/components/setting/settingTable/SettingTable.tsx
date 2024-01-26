@@ -1,6 +1,6 @@
 import {Button} from "../../button/Button";
 import s from './SettingTable.module.css'
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {SettingTableType} from "../../../App";
 import {NavLink} from "react-router-dom";
 
@@ -8,6 +8,20 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
     const [min, setMin] = useState<number>(minValueProps);
     const [max, setMax] = useState<number>(maxValueProps);
     const [isError, setIsError] = useState<boolean>(false);
+
+
+
+
+    useEffect(() => {
+        const storedMin = localStorage.getItem("minValue");
+        const storedMax = localStorage.getItem("maxValue");
+
+        if (storedMin && storedMax) {
+            setMin(parseInt(storedMin));
+            setMax(parseInt(storedMax));
+            onSettingsChange(parseInt(storedMin), parseInt(storedMax));
+        }
+    }, [onSettingsChange]);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.currentTarget;
@@ -22,7 +36,10 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
 
     const handleApplySettings = () => {
         onSettingsChange(min, max);
+        localStorage.setItem("minValue", String(min));
+        localStorage.setItem("maxValue", String(max));
     };
+
 
     return (
         <div className={s.setting}>
@@ -47,8 +64,8 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
                 </label>
                 <br />
             </div>
-            <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min || undefined} />
-            <NavLink to='/counter'><Button name={'counter'} onClick={()=>{}}/></NavLink>
+            <NavLink to='/counter'><Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min || undefined} /></NavLink>
+
         </div>
     );
 };
