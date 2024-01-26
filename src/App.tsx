@@ -13,14 +13,24 @@ export type SettingTableType = {
 }
 
 function App() {
-    const [minValue, setMinValue] = useState<number>(parseInt(localStorage.getItem("minValue") || "0"));
-    const [maxValue, setMaxValue] = useState<number>(parseInt(localStorage.getItem("maxValue") || "0"));
+    //
+    // const [minValue, setMinValue] = useState<number>(0);
+    // const [maxValue, setMaxValue] = useState<number>(0);
 
-
+    const storedMinValue = localStorage.getItem("minValue");
+    const storedMaxValue = localStorage.getItem("maxValue");
+    const [minValue, setMinValue] = useState<number>(
+        storedMinValue ? parseInt(storedMinValue) : 0
+    );
+    const [maxValue, setMaxValue] = useState<number>(
+        storedMaxValue ? parseInt(storedMaxValue) : 0
+    );
     const handleSettingsChange = (newMin: number, newMax: number) => {
         setMinValue(newMin);
         setMaxValue(newMax);
+
     };
+
 
     return (
         <div className="App">

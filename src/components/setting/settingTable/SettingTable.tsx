@@ -21,7 +21,7 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
             setMax(parseInt(storedMax));
             onSettingsChange(parseInt(storedMin), parseInt(storedMax));
         }
-    }, [onSettingsChange]);
+    }, []);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.currentTarget;
@@ -64,7 +64,8 @@ export const SettingTable: React.FC<SettingTableType> = ({ minValueProps, maxVal
                 </label>
                 <br />
             </div>
-            <NavLink to='/counter'><Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min || undefined} /></NavLink>
+            <Button name={'set'} onClick={handleApplySettings} disabled={min < 0 || max < 1 || max <= min || undefined} />
+    <NavLink to='/counter'><Button name={'count'} onClick={()=>{}}/></NavLink>
 
         </div>
     );

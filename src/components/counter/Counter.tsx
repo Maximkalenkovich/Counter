@@ -12,12 +12,29 @@ export const Counter: React.FC<{ minValueProps: number; maxValueProps: number }>
 
     const increment = () => {
         if (count < maxValueProps) {
-            setCount(count + defaultValue);
+            const newValue = count + defaultValue;
+            setCount(newValue);
+            localStorage.setItem("counter value", JSON.stringify(newValue));
         }
     };
+
+    useEffect(() => {
+        const storedValue = localStorage.getItem("counter value");
+        if (storedValue) {
+            setCount(JSON.parse(storedValue));
+        }
+    }, []);
+
     const reset = () => {
         setCount(minValueProps);
     };
+
+
+
+
+    useEffect(() => {
+        localStorage.setItem('counter value', JSON.stringify(count))
+    }, [count]);
 
     return (
         <div className={st.counter}>
